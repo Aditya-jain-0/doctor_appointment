@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Timing from '../Component/Timing';
 
 const Home = () => {
   const doclist = [
@@ -25,6 +26,8 @@ const Home = () => {
   ];
 
   const [selectedItem, setSelectedItem] = useState(null);
+  const [email, setemail] = useState("")
+  const [islogin, setislogin] = useState(false)
 
   const handleclick = (name, timings) => {
     setSelectedItem({ name, timings });
@@ -33,10 +36,20 @@ const Home = () => {
   return (
     <>
       <div className='user'>
-        <button>
-          <a href='/login'>Login</a>
-        </button>
-        &nbsp;
+        {
+          !islogin ? (
+            <>
+              Enter Your Email :&nbsp; 
+              <input type='email' value={email} onChange={(e)=>setemail(e.target.value)}/>
+              <button>Login</button>
+            </>              
+          ):(
+            <>
+              <p>Hi,Username</p>
+            </>
+          )
+        }
+        <br/>
         <button>
           <a href='/register'>Register</a>
         </button>
@@ -58,9 +71,13 @@ const Home = () => {
         </div>
         <div className='timings'>
           {selectedItem && (
-            <p>
-              Timings for {selectedItem.name}: {selectedItem.timings.join(', ')}
-            </p>
+            <div className='timing-container'>
+              {selectedItem.timings.map((timing, index) => (
+                <div key={index} className='timing-item'>
+                  <Timing element={timing} />
+                </div>
+              ))} 
+            </div>
           )}
         </div>
       </div>
