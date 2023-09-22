@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import Timing from '../Component/Timing';
+const PORT = process.env.REACT_APP_SERVER_PORT;
+const API_BASE = `http://localhost:${PORT}`
 
 const Home = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [email, setemail] = useState("")
+  const [islogin, setislogin] = useState(false)
+  const [name, setname] = useState("")
   const doclist = [
     {
       name: 'A',
@@ -25,13 +31,30 @@ const Home = () => {
     },
   ];
 
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [email, setemail] = useState("")
-  const [islogin, setislogin] = useState(false)
 
   const handleclick = (name, timings) => {
     setSelectedItem({ name, timings });
   };
+
+  const handlesubmit = async(e)=>{
+      e.preventDefault();
+      const resp = await fetch(API_BASE,{
+      method:'POST',
+      headers : {
+         'Content-type':'application/json'
+      },
+      body:JSON.stringify({
+        useremail:email
+      })
+    })
+    if(resp.status === 200){
+        const data = await resp.json();
+        // console.log(data);
+        setname(data.name)
+        setislogin(true);
+    }
+
+  }
 
   return (
     <>
@@ -41,18 +64,16 @@ const Home = () => {
             <>
               Enter Your Email :&nbsp; 
               <input type='email' value={email} onChange={(e)=>setemail(e.target.value)}/>
-              <button>Login</button>
+              <button onClick={handlesubmit}>Login</button>
             </>              
           ):(
             <>
-              <p>Hi,Username</p>
+              <p>Hi,{name}</p>
             </>
           )
         }
         <br/>
-        <button>
-          <a href='/register'>Register</a>
-        </button>
+        <a href='/register'>Register</a>
       </div>
       <br />
       <div className='main'>
@@ -71,12 +92,14 @@ const Home = () => {
         </div>
         <div className='timings'>
           {selectedItem && (
+            <div>Book Appointments for {selectedItem.name}<br/>
             <div className='timing-container'>
               {selectedItem.timings.map((timing, index) => (
                 <div key={index} className='timing-item'>
                   <Timing element={timing} />
                 </div>
               ))} 
+             </div>
             </div>
           )}
         </div>

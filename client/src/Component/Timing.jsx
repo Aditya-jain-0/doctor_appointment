@@ -6,7 +6,7 @@ const Timing = ({element}) => {
   }
   return (
     <>
-    <h1 onClick={()=>{handleclick(element)}}>{element}</h1>
+    <p onClick={()=>{handleclick(element)}}>{element}</p>
     </>
   )
 }

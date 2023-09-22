@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 const Register = () => {
   const [username, setusername] = useState("")
   const [email, setemail] = useState("")
-  const [password, setpassword] = useState("")
+  const [otp, setotp] = useState(null)
   return (
     <>
       <h1>Registration</h1>
@@ -19,10 +19,10 @@ const Register = () => {
             onChange={(e)=>setemail(e.target.value)}
           />
           <br/>
-          Enter Password :- <input
-            type='password'
-            value={password}
-            onChange={(e)=>setpassword(e.target.value)}
+          Enter Otp :- <input
+            type='text'
+            value={otp}
+            onChange={(e)=>setotp(e.target.value)}
           />
           <br/>
           <button>Register Me</button>
