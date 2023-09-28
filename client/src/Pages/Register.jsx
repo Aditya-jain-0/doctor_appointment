@@ -26,14 +26,32 @@ const Register = () => {
   }
 }
  
-  const handlesubmit = (e)=>{
-      e.preventDefault();
-      if(otp == servertopref.current){
-        console.log("Valid email user is good to go");
-      }else{
-        console.log("Invalid otp")
-      }
+const handlesubmit = async(e) => {
+  e.preventDefault();
+  if (otp === servertopref.current.toString()) {
+    console.log("Valid email user is good to go");
+    const resp = await fetch(API_BASE,{
+      method:'POST',
+      headers : {
+        'Content-type':'application/json'
+     },
+     body:JSON.stringify({
+        username:username,
+        email:email,
+        flag : true
+     })
+    })
+
+    if(resp.status === 200){
+      const data = await resp.json();
+      console.log(data);
+    }
+
+  } else {
+    console.log("Invalid OTP");
   }
+};
+
 
   return (
     <>
@@ -57,7 +75,7 @@ const Register = () => {
             type='text'
             value={otp}
             onChange={(e)=>setotp(e.target.value)}
-          />
+          /><br/>
         <button onClick={handlesubmit}>Register</button> 
       <p>Back to <a href='/'>Home</a></p>  
     </>

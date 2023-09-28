@@ -1,105 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Timing from '../Component/Timing';
+
 const PORT = process.env.REACT_APP_SERVER_PORT;
-const API_BASE = `http://localhost:${PORT}`
+const API_BASE = `http://localhost:${PORT}`;
 
 const Home = () => {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [email, setemail] = useState("")
-  const [islogin, setislogin] = useState(false)
-  const [name, setname] = useState("")
-  const doclist = [
-    {
-      name: 'A',
-      timings: ['1', '2', '3', '4'],
-    },
-    {
-      name: 'B',
-      timings: ['5', '6', '7', '8'],
-    },
-    {
-      name: 'C',
-      timings: ['9', '10', '11', '12'],
-    },
-    {
-      name: 'D',
-      timings: ['13', '14', '15', '16'],
-    },
-    {
-      name: 'E',
-      timings: ['17', '18', '19', '20'],
-    },
-  ];
+  const [doctors, setDoctors] = useState([]);
+  const [email, setEmail] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [name, setName] = useState("");
 
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const resp = await fetch(API_BASE);
+        if (resp.status === 200) {
+          const data = await resp.json();
+          const filteredDoctors = data.filter(doctor => doctor.slots.some(slot => !slot.isBooked));
+          setDoctors(filteredDoctors);
+        }
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    }
+    fetchdata();
+  }, []);
 
   const handleclick = (name, timings) => {
     setSelectedItem({ name, timings });
   };
 
-  const handlesubmit = async(e)=>{
-      e.preventDefault();
-      const resp = await fetch(API_BASE,{
-      method:'POST',
-      headers : {
-         'Content-type':'application/json'
+  const handlesubmit = async (e) => {
+    e.preventDefault();
+    const resp = await fetch(API_BASE, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
       },
-      body:JSON.stringify({
-        useremail:email
+      body: JSON.stringify({
+        useremail: email
       })
     })
-    if(resp.status === 200){
-        const data = await resp.json();
-        // console.log(data);
-        setname(data.name)
-        setislogin(true);
+    if (resp.status === 200) {
+      const data = await resp.json();
+      setName(data.name);
+      setIsLogin(true);
     }
-
   }
 
   return (
     <>
       <div className='user'>
-        {
-          !islogin ? (
-            <>
-              Enter Your Email :&nbsp; 
-              <input type='email' value={email} onChange={(e)=>setemail(e.target.value)}/>
-              <button onClick={handlesubmit}>Login</button>
-            </>              
-          ):(
-            <>
-              <p>Hi,{name}</p>
-            </>
-          )
-        }
-        <br/>
+        {!isLogin ? (
+          <>
+            Enter Your Email :&nbsp;
+            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <button onClick={handlesubmit}>Login</button>
+          </>
+        ) : (
+          <>
+            <p>Hi, {name}</p>
+          </>
+        )}
+        <br />
         <a href='/register'>Register</a>
       </div>
       <br />
       <div className='main'>
         <div className='doctorslist'>
           <ol>
-            {doclist.map((item, key) => (
+            {doctors.map((doctor, index) => (
               <li
-                onClick={() => handleclick(item.name, item.timings)}
-                key={key}
-                className={selectedItem?.name === item.name ? 'selected' : ''}
+                onClick={() => handleclick(doctor.docname, doctor.slots.map(slot => slot.timing))}
+                key={index}
+                className={selectedItem?.name === doctor.docname ? 'selected' : ''}
               >
-                {item.name}
+                {doctor.docname}
               </li>
             ))}
           </ol>
         </div>
         <div className='timings'>
           {selectedItem && (
-            <div>Book Appointments for {selectedItem.name}<br/>
-            <div className='timing-container'>
-              {selectedItem.timings.map((timing, index) => (
-                <div key={index} className='timing-item'>
-                  <Timing element={timing} />
-                </div>
-              ))} 
-             </div>
+            <div>Book Appointments for {selectedItem.name}<br />
+              <div className='timing-container'>
+                {selectedItem.timings.map((timing, index) => (
+                  <div key={index} className='timing-item'>
+                    <Timing element={timing} islogin={isLogin} />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
