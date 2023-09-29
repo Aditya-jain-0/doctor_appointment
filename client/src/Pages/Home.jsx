@@ -17,18 +17,17 @@ const Home = () => {
         const resp = await fetch(API_BASE);
         if (resp.status === 200) {
           const data = await resp.json();
-          const filteredDoctors = data.filter(doctor => doctor.slots.some(slot => !slot.isBooked));
-          setDoctors(filteredDoctors);
+          setDoctors(data);
         }
       } catch (error) {
         console.error("Error fetching doctors:", error);
       }
-    }
+    };
     fetchdata();
   }, []);
 
-  const handleclick = (name, timings) => {
-    setSelectedItem({ name, timings });
+  const handleclick = (name, profession, slots) => {
+    setSelectedItem({ name, profession, slots });
   };
 
   const handlesubmit = async (e) => {
@@ -36,26 +35,30 @@ const Home = () => {
     const resp = await fetch(API_BASE, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        useremail: email
-      })
-    })
+        useremail: email,
+      }),
+    });
     if (resp.status === 200) {
       const data = await resp.json();
       setName(data.name);
       setIsLogin(true);
     }
-  }
+  };
 
   return (
     <>
-      <div className='user'>
+      <div className="user">
         {!isLogin ? (
           <>
             Enter Your Email :&nbsp;
-            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <button onClick={handlesubmit}>Login</button>
           </>
         ) : (
@@ -64,31 +67,40 @@ const Home = () => {
           </>
         )}
         <br />
-        <a href='/register'>Register</a>
+        <a href="/register">Register</a>
       </div>
       <br />
-      <div className='main'>
-        <div className='doctorslist'>
+      <div className="main">
+        <div className="doctorslist">
           <ol>
             {doctors.map((doctor, index) => (
               <li
-                onClick={() => handleclick(doctor.docname, doctor.slots.map(slot => slot.timing))}
+                onClick={() =>
+                  handleclick(doctor.docname, doctor.profession, doctor.slots)
+                }
                 key={index}
-                className={selectedItem?.name === doctor.docname ? 'selected' : ''}
+                className={
+                  selectedItem?.name === doctor.docname ? "selected" : ""
+                }
               >
-                {doctor.docname}
+                {doctor.docname} - {doctor.profession}
               </li>
             ))}
           </ol>
         </div>
-        <div className='timings'>
+        <div className="timings">
           {selectedItem && (
-            <div>Book Appointments for {selectedItem.name}<br />
-              <div className='timing-container'>
-                {selectedItem.timings.map((timing, index) => (
-                  <div key={index} className='timing-item'>
-                    <Timing element={timing} islogin={isLogin} />
-                  </div>
+            <div>
+              Book Appointments for {selectedItem.profession}{" "}
+              {selectedItem.name}
+              <br />
+              <div className="timing-container">
+                {selectedItem.slots.map((slot, index) => (
+                  !slot.isBooked && (
+                    <div key={index} className="timing-item">
+                      <Timing element={slot.timing} islogin={isLogin} />
+                    </div>
+                  )
                 ))}
               </div>
             </div>
