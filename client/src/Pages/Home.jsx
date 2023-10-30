@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import Timing from '../Component/Timing';
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
 
 const PORT = process.env.REACT_APP_SERVER_PORT;
 const API_BASE = `http://localhost:${PORT}`;
 
 const Home = () => {
-  const [selectedItem, setSelectedItem] = useState(null);
   const [doctors, setDoctors] = useState([]);
   const [email, setEmail] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [name, setName] = useState("");
+  const [prev, setprev] = useState(null)
+  const nav = useNavigate();
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -27,7 +29,8 @@ const Home = () => {
   }, []);
 
   const handleclick = (name, profession, slots) => {
-    setSelectedItem({ name, profession, slots });
+    const state = { docname: name, profession, slots, isLogin,email,name};
+    nav(`/doctor/${name}`, { state });
   };
 
   const handlesubmit = async (e) => {
@@ -44,10 +47,13 @@ const Home = () => {
     if (resp.status === 200) {
       const data = await resp.json();
       setName(data.name);
+      setprev(data.latestVisit);
+      toast.success(`${data.name} Logged in Successfully`)
       setIsLogin(true);
+    }else if(resp.status === 401){
+      toast.error(`Email not Authorized`)
     }
   };
-
   return (
     <>
       <div className="user">
@@ -64,12 +70,17 @@ const Home = () => {
         ) : (
           <>
             <p>Hi, {name}</p>
+            {prev && (
+              <>
+                Previous Visit - Had Appointment with {prev.doctor} on {prev.date} at {prev.time} 
+              </>
+            )}
           </>
         )}
-        <br />
+        <br/>
         <a href="/register">Register</a>
       </div>
-      <br />
+      
       <div className="main">
         <div className="doctorslist">
           <ol>
@@ -79,32 +90,11 @@ const Home = () => {
                   handleclick(doctor.docname, doctor.profession, doctor.slots)
                 }
                 key={index}
-                className={
-                  selectedItem?.name === doctor.docname ? "selected" : ""
-                }
               >
-                {doctor.docname} - {doctor.profession}
+                {doctor.docname} - {doctor.profession}<br/><br/>
               </li>
             ))}
           </ol>
-        </div>
-        <div className="timings">
-          {selectedItem && (
-            <div>
-              Book Appointments for {selectedItem.profession}{" "}
-              {selectedItem.name}
-              <br />
-              <div className="timing-container">
-                {selectedItem.slots.map((slot, index) => (
-                  !slot.isBooked && (
-                    <div key={index} className="timing-item">
-                      <Timing element={slot.timing} islogin={isLogin} />
-                    </div>
-                  )
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>

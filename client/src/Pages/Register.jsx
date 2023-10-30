@@ -1,4 +1,5 @@
 import React,{useState,useRef} from 'react'
+import { toast } from 'react-hot-toast'
 const PORT = process.env.REACT_APP_SERVER_PORT;
 const API_BASE = `http://localhost:${PORT}/register`
 const Register = () => {
@@ -22,6 +23,7 @@ const Register = () => {
 
   if(resp.status === 200){
     const data  = await resp.json();
+    toast.success('sent OTP to your email for verification')
     servertopref.current = data.otp;
   }
 }
@@ -29,7 +31,7 @@ const Register = () => {
 const handlesubmit = async(e) => {
   e.preventDefault();
   if (otp === servertopref.current.toString()) {
-    console.log("Valid email user is good to go");
+    // console.log("Valid email user is good to go");
     const resp = await fetch(API_BASE,{
       method:'POST',
       headers : {
@@ -44,10 +46,12 @@ const handlesubmit = async(e) => {
 
     if(resp.status === 200){
       const data = await resp.json();
+      toast.success(`${username} Registered Successfully`)
       console.log(data);
     }
 
   } else {
+    toast.error("Invalid OTP");
     console.log("Invalid OTP");
   }
 };
