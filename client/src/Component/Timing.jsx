@@ -26,7 +26,6 @@ const Timing = ({element,timingId,islogin,email,username,docname}) => {
           timingId:timingId,
        })
        })
-       console.log("timing component ",timing,timingId)
        if(resp.status === 200){
         const data = await resp.json();
         toast.success('Booking Done , Confirmation is sent to email')

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 const PORT = process.env.REACT_APP_SERVER_PORT;
 const API_BASE = `http://localhost:${PORT}`;
@@ -11,6 +11,7 @@ const Home = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [name, setName] = useState("");
   const [prev, setprev] = useState(null)
+  const loc = useLocation()
   const nav = useNavigate();
 
   useEffect(() => {
@@ -28,9 +29,9 @@ const Home = () => {
     fetchdata();
   }, []);
 
-  const handleclick = (name, profession, slots) => {
-    const state = { docname: name, profession, slots, isLogin,email,name};
-    nav(`/doctor/${name}`, { state });
+  const handleclick = (docname, profession, slots) => {
+    const state = { docname, profession, slots, isLogin,email,name};
+    nav(`/doctor/${docname}`, { state });
   };
 
   const handlesubmit = async (e) => {
@@ -46,6 +47,7 @@ const Home = () => {
     });
     if (resp.status === 200) {
       const data = await resp.json();
+      console.log(data);
       setName(data.name);
       setprev(data.latestVisit);
       toast.success(`${data.name} Logged in Successfully`)
@@ -54,6 +56,12 @@ const Home = () => {
       toast.error(`Email not Authorized`)
     }
   };
+
+  const visitclick = ()=>{
+      const state = {name,isLogin}
+      nav(`/visits/${name}`,{state})
+  }
+
   return (
     <>
       <div className="user">
@@ -73,9 +81,10 @@ const Home = () => {
             {prev && (
               <>
                 Previous Visit - Had Appointment with {prev.doctor} on {prev.date} at {prev.time} 
+                <br/><button onClick={visitclick}>All Visits</button>
               </>
             )}
-          </>
+          </>          
         )}
         <br/>
         <a href="/register">Register</a>

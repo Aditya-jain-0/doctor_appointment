@@ -4,10 +4,6 @@ const Docpage = () => {
   const location = useLocation();
   const { docname, profession, slots, isLogin,email,name} = location.state; 
 
-  console.log(docname);
-  console.log(profession);
-  console.log(slots,isLogin);
-
   return (
     <>
     <div>

@@ -86,7 +86,8 @@ app.post('/register',async(req,res)=>{
     if(flag){
         const newUser = new User({
             username:username,
-            email:em
+            email:em,
+            previousVisits: []
         })
         try {
             const saveUser = await newUser.save();
@@ -132,8 +133,12 @@ app.post('/book/:timingId', async (req, res) => {
   
 app.post('/addprevisit',async(req,res)=>{
     const {username,docname,timing,currdate} = req.body;
+    // console.log(username,docname,timing,currdate)
     try {
         const user = await User.findOne({username});
+        if (!user.previousVisits) {
+          user.previousVisits = [];
+        }
         user.previousVisits.push({
             doctor: docname,
             date: currdate,
@@ -147,6 +152,21 @@ app.post('/addprevisit',async(req,res)=>{
         return res.status(500).json({ message: 'Internal server error' })
     }
 })
+
+app.post('/visits/:username', async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    if (user) {
+      const data = user.previousVisits
+      res.status(200).json(data)
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+});
+
 
 app.listen(PORT,()=>{
     console.log(`Server runnnig at post ${PORT}`)
