@@ -38,11 +38,13 @@ const Visits = () => {
     <>
       {isLogin ? (
         <>
-          <div>Visits by {name} </div>
+          <div style={{fontWeight:'bold',fontSize:'15px'}}>Visits by {name} </div>
           {visits.length > 0 ? (
             <ul>
               {visits.map((val, index) => (
-                <li key={index}>{val.doctor} on {val.date} at {val.time}</li>
+                <li style={{fontWeight:'bold',fontSize:'15px'}}
+                 key={index}>{val.doctor} on {val.date} at {val.time}</li>
+                
               ))}
             </ul>
           ) : (

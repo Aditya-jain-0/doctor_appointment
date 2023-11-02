@@ -64,23 +64,25 @@ const Home = () => {
 
   return (
     <>
+      <h1>Doctor Appointment System</h1>
       <div className="user">
         {!isLogin ? (
           <>
-            Enter Your Email :&nbsp;
+            <span style={{fontWeight:'bold',fontSize:'21px'}}>Enter Your Email :&nbsp;</span>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{fontWeight:'bold',fontSize:'15px'}}
             />
             <button onClick={handlesubmit}>Login</button>
           </>
         ) : (
           <>
-            <p>Hi, {name}</p>
+            <p style={{fontWeight:'bold',fontSize:'21px'}}>Hi, <span style={{fontWeight:'bold',fontSize:'21px',color:'greenyellow'}}>{name}</span></p>
             {prev && (
               <>
-                Previous Visit - Had Appointment with {prev.doctor} on {prev.date} at {prev.time} 
+              <p>Previous Visit - Had Appointment with {prev.doctor} on {prev.date} at {prev.time} </p>
                 <br/><button onClick={visitclick}>All Visits</button>
               </>
             )}
@@ -98,7 +100,7 @@ const Home = () => {
                 onClick={() =>
                   handleclick(doctor.docname, doctor.profession, doctor.slots)
                 }
-                key={index}
+                key={index} style={{fontWeight:'bold',fontSize:'21px'}}
               >
                 {doctor.docname} - {doctor.profession}<br/><br/>
               </li>

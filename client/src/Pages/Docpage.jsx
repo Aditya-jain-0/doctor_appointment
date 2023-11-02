@@ -7,10 +7,10 @@ const Docpage = () => {
   return (
     <>
     <div>
-      {docname}<br/>
-      {profession}<br/>
+    <h2>{docname}<br/></h2>
+      <h2>{profession}<br/></h2>
       <div>
-        Book Appointments for {docname}
+        <h2>Book Appointments for {docname}</h2>
         <br />
         <div className="timing-container">
           {slots.map((slot, index) => (

@@ -61,13 +61,13 @@ const handlesubmit = async(e) => {
     <>
       <h1>Registration</h1>
       <form onSubmit={handleverf}>
-          Enter Your Name :- <input
+          <span style={{fontWeight:'bold',fontSize:'17px'}}>Enter Your Name</span> :- <input
             type='text'
             value={username}
             onChange={(e)=>setusername(e.target.value)}
           />  
           <br/>
-          Enter Email :- <input
+          <span style={{fontWeight:'bold',fontSize:'17px'}}>Enter Email</span> :- <input
             type='email'
             value={email}
             onChange={(e)=>setemail(e.target.value)}
@@ -75,7 +75,7 @@ const handlesubmit = async(e) => {
           <br/>
           <button>Verfy Email</button>
       </form>
-          Enter Otp :- <input
+          <span style={{fontWeight:'bold',fontSize:'17px'}}>Enter Otp</span> :- <input
             type='text'
             value={otp}
             onChange={(e)=>setotp(e.target.value)}

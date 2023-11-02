@@ -11,7 +11,7 @@
   padding: 5px;
   text-align: center;
   background-color: #f0f0f0;
-  width: 75px;
+  width: 85px;
   height: 40px; 
   border-radius: 50px; 
   display: flex;
@@ -19,11 +19,13 @@
   align-items: center;
   margin: 10px;
   cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 a{
   color : greenyellow;
   background: none;
   background-color: transparent;
+  font-size: 20px;
 }
-
