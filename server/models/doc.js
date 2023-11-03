@@ -16,6 +16,10 @@ const Doctor = new mongoose.Schema({
         type: String,
         required: true
     },
+    isavail:{
+        type:Boolean,
+        required:true,
+    },
     profession: {
         type: String,
         required: true

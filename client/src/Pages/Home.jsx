@@ -28,9 +28,13 @@ const Home = () => {
     fetchdata();
   }, []);
 
-  const handleclick = (docname, profession,contact,room, slots) => {
+  const handleclick = (docname,isavail , profession,contact,room, slots) => {
+    if(isavail){
     const state = { docname, profession, contact, room, slots, isLogin, email, name};
     nav(`/doctor/${docname}`, { state });
+    }else{
+      toast.error(`${docname} is not Available today`)
+    }
   };
 
   const handlesubmit = async (e) => {
@@ -97,11 +101,11 @@ const Home = () => {
             {doctors.map((doctor, index) => (
               <li
                 onClick={() =>
-                  handleclick(doctor.docname, doctor.profession,doctor.contact,doctor.room ,doctor.slots)
+                  handleclick(doctor.docname,doctor.isavail, doctor.profession,doctor.contact,doctor.room ,doctor.slots)
                 }
                 key={index} style={{fontWeight:'bold',fontSize:'21px',cursor:'pointer'}}
               >
-                {doctor.docname} - <u>{doctor.profession}</u><br/><br/>
+                {doctor.docname} - <u>{doctor.profession}</u>{doctor.isavail ? null : ' (Not Available)'}<br/><br/>
               </li>
             ))}
           </ol>

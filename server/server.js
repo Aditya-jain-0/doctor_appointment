@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const User = require('./models/DB')
 const Doctor = require('./models/doc')
+const Admin = require('./models/admindata')
 
 require('dotenv').config();
 const app = express();
@@ -33,6 +34,16 @@ app.get('/',async(req,res)=>{
     }
 })
 
+app.get('/admin/getadmindata',async(req,res)=>{
+  try{
+    const doctors = await Doctor.find();
+    const users = await User.find();
+    res.status(200).json({doctors,users})
+  }catch(err){
+      console.error("Error fetching:", err);
+      res.status(500).json({ err: 'Error fetching .' });
+  }
+})
 
 app.post('/', async (req, res) => {
     const { useremail: email } = req.body;
@@ -173,6 +184,21 @@ app.post('/visits/:username', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' })
   }
 });
+
+app.post('/admin',async (req,res)=>{
+   const {username : adminname,password : adminpassword} = req.body;
+   try {
+      const user = await Admin.findOne({adminname,adminpassword});
+      if(user){
+        res.status(200).json({message:'user found'})
+      }else{
+      res.status(401).json({message:'nope'})
+      }
+   } catch (error) {
+    console.error(err);
+    res.status(500).json({ err: 'Error fetching' });
+   }
+})
 
 
 app.listen(PORT,()=>{
