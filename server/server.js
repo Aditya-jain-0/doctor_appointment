@@ -22,6 +22,7 @@ const confmailfunc = require('./confmail')
 app.use(cors());
 app.use(express.json())
 
+//home page
 app.get('/',async(req,res)=>{
     try{
         const doctors = await Doctor.find();
@@ -31,6 +32,7 @@ app.get('/',async(req,res)=>{
         res.status(500).json({ err: 'Error fetching doctors.' });
     }
 })
+
 
 app.post('/', async (req, res) => {
     const { useremail: email } = req.body;
@@ -64,6 +66,8 @@ function generateRandomSixDigitNumber() {
     
     return randomNumber;
 }
+
+//register page
 app.post('/register',async(req,res)=>{
     const {username,email : em,otp,flag} = req.body;
     // console.log(flag)
@@ -98,6 +102,7 @@ app.post('/register',async(req,res)=>{
     }
 })
 
+// timing component
 app.post('/book/:timingId', async (req, res) => {
     const { username, email, docname, timing, timingId } = req.body;
     console.log(username, docname, timing, timingId);
@@ -130,7 +135,8 @@ app.post('/book/:timingId', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
-  
+
+//home page pervious page visit  
 app.post('/addprevisit',async(req,res)=>{
     const {username,docname,timing,currdate} = req.body;
     // console.log(username,docname,timing,currdate)
@@ -153,6 +159,7 @@ app.post('/addprevisit',async(req,res)=>{
     }
 })
 
+//previous visits page
 app.post('/visits/:username', async (req, res) => {
   const { username } = req.body;
   try {
