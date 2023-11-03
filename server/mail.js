@@ -4,13 +4,13 @@ const mailme = (em,serverotp,callback)=>{
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'nodejstest80@gmail.com',
-    pass: 'ambgtgjzpvuupjjy'
+    user: 'sender_email_address',
+    pass: 'sender_password'
   }
 });
 
 var mailOptions = {
-  from: 'nodejstest80@gmail.com',
+  from: 'sender_email_address',
   to: em,
   subject: 'Email Verfication',
   text: `OTP :- ${serverotp}`
