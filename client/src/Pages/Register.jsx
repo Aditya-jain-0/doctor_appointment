@@ -72,8 +72,7 @@ const handlesubmit = async(e) => {
             value={email}
             onChange={(e)=>setemail(e.target.value)}
           />
-          <br/>
-          <button>Verfy Email</button>
+          &nbsp;&nbsp;&nbsp;<button>Verfy Email</button>
       </form>
           <span style={{fontWeight:'bold',fontSize:'17px'}}>Enter Otp</span> :- <input
             type='text'

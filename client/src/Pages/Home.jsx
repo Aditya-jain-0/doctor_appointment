@@ -11,7 +11,6 @@ const Home = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [name, setName] = useState("");
   const [prev, setprev] = useState(null)
-  const loc = useLocation()
   const nav = useNavigate();
 
   useEffect(() => {
@@ -29,8 +28,8 @@ const Home = () => {
     fetchdata();
   }, []);
 
-  const handleclick = (docname, profession, slots) => {
-    const state = { docname, profession, slots, isLogin,email,name};
+  const handleclick = (docname, profession,contact,room, slots) => {
+    const state = { docname, profession, contact, room, slots, isLogin, email, name};
     nav(`/doctor/${docname}`, { state });
   };
 
@@ -74,7 +73,7 @@ const Home = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{fontWeight:'bold',fontSize:'15px'}}
-            />
+            /><br/>
             <button onClick={handlesubmit}>Login</button>
           </>
         ) : (
@@ -98,11 +97,11 @@ const Home = () => {
             {doctors.map((doctor, index) => (
               <li
                 onClick={() =>
-                  handleclick(doctor.docname, doctor.profession, doctor.slots)
+                  handleclick(doctor.docname, doctor.profession,doctor.contact,doctor.room ,doctor.slots)
                 }
-                key={index} style={{fontWeight:'bold',fontSize:'21px'}}
+                key={index} style={{fontWeight:'bold',fontSize:'21px',cursor:'pointer'}}
               >
-                {doctor.docname} - {doctor.profession}<br/><br/>
+                {doctor.docname} - <u>{doctor.profession}</u><br/><br/>
               </li>
             ))}
           </ol>

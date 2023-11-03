@@ -20,6 +20,14 @@ const Doctor = new mongoose.Schema({
         type: String,
         required: true
     },
+    contact: {
+        type: String,
+        required: true
+    },
+    room: {
+        type: String,
+        required: true
+    },
     slots: [Slot]
 });
 
