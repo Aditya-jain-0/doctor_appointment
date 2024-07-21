@@ -6,6 +6,7 @@ import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import Docpage from './Pages/Docpage';
 import Visits from './Pages/Visits';
 import Admin from './Pages/Admin';
+import Admin_doc from './Pages/Admin_doc';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/doctor/:docname' element={<Docpage />}/>
         <Route path='/visits/:username' element={<Visits/>}/>
         <Route path='/admin' element={<Admin/>}/>
+        <Route path='/admin/:docname/:docid' element={<Admin_doc/>}/>
       </Routes>
       </BrowserRouter>
     </>

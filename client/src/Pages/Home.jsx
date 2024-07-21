@@ -78,7 +78,7 @@ const Home = () => {
               onChange={(e) => setEmail(e.target.value)}
               style={{fontWeight:'bold',fontSize:'15px'}}
             /><br/>
-            <button onClick={handlesubmit}>Login</button>
+            <button className='defbtn' onClick={handlesubmit}>Login</button>
           </>
         ) : (
           <>

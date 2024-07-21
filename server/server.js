@@ -18,10 +18,12 @@ mongoose.connect(MONGO_URL)
 
 
 const mailfunc = require('./mail')
-const confmailfunc = require('./confmail')
+const confmailfunc = require('./confmail');
+const admin_router = require('./admin_process');
 
 app.use(cors());
 app.use(express.json())
+app.use('/admin',admin_router)
 
 //home page
 app.get('/',async(req,res)=>{
@@ -32,17 +34,6 @@ app.get('/',async(req,res)=>{
         console.error("Error fetching doctors:", err);
         res.status(500).json({ err: 'Error fetching doctors.' });
     }
-})
-
-app.get('/admin/getadmindata',async(req,res)=>{
-  try{
-    const doctors = await Doctor.find();
-    const users = await User.find();
-    res.status(200).json({doctors,users})
-  }catch(err){
-      console.error("Error fetching:", err);
-      res.status(500).json({ err: 'Error fetching .' });
-  }
 })
 
 app.post('/', async (req, res) => {
@@ -184,22 +175,6 @@ app.post('/visits/:username', async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' })
   }
 });
-
-app.post('/admin',async (req,res)=>{
-   const {username : adminname,password : adminpassword} = req.body;
-   try {
-      const user = await Admin.findOne({adminname,adminpassword});
-      if(user){
-        res.status(200).json({message:'user found'})
-      }else{
-      res.status(401).json({message:'nope'})
-      }
-   } catch (error) {
-    console.error(err);
-    res.status(500).json({ err: 'Error fetching' });
-   }
-})
-
 
 app.listen(PORT,()=>{
     console.log(`Server runnnig at post ${PORT}`)

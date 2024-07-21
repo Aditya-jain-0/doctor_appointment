@@ -1,2 +1,13 @@
-**/node_modules/
-**/package.json/
+# server/.env/
+server/node_modules
+server/package-lock.json
+server/confmail.js
+server/mail.js
+
+client/.env
+client/node_modules
+client/package-lock.json
+
+.vscode
+
+

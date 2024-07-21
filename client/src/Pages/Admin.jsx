@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { useNavigate } from 'react-router-dom'
+
 const PORT = process.env.REACT_APP_SERVER_PORT;
 const API_BASE = `http://localhost:${PORT}/admin`;
 
 const Admin = () => {
   const usernameref = useRef(null);
   const passwordref = useRef(null);
-  const [login, setlogin] = useState(false);
-  const [data, setdata] = useState({ doctors: [], users: [] });
+  const [login, setlogin] = useState(true);
+  const [data, setdata] = useState({ doctors: [] });
+  const nav = useNavigate();
+
 
   useEffect(() => {
     if (login) {
@@ -38,12 +42,19 @@ const Admin = () => {
         password: passwordref.current.value,
       }),
     });
-
     if (resp.status === 200) {
       setlogin(true);
     }
   };
 
+  const editdocpage = (doctor) => {
+    // const state = doctor;
+    const doctorname = doctor.docname;
+    const doctorid = doctor._id;
+    const doctorstatus = (doctor.isavail) ? 1 : 0;
+    const state = { doctorid, doctorname,doctorstatus };
+    nav(`/admin/${doctor.docname}/${doctor._id}`, { state })
+  }
 
   return (
     <>
@@ -63,25 +74,29 @@ const Admin = () => {
         </>
       ) : (
         <>
-          {data.doctors && data.users && (
+          {data.doctors && (
             <div>
               <h3>Doctors</h3>
-              <ul>
+              <ul className='admindoctorlist'>
                 {data.doctors.map((doctor) => (
-                  <li key={doctor._id}>{doctor.docname}</li>
-                ))} 
-              </ul>
-
-              <h3>Patients</h3>
-              <ul>
-                {data.users.map((user) => (
-                  <li key={user._id}>{user.username}</li>
+                  <li key={doctor._id}>
+                    {doctor.docname}
+                    <button 
+                      className='defbtn' 
+                      onClick={() => editdocpage(doctor)}>
+                        Update
+                     </button>
+                  </li>
                 ))}
               </ul>
             </div>
           )}
         </>
       )}
+
+        <button className='defbtn' onClick={()=>{nav(`/`)}}>
+        Back
+        </button>
     </>
   );
 };
