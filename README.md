@@ -11,4 +11,4 @@ Web Based Doctor Appointment System
 ![Prev_visits](https://github.com/user-attachments/assets/8b9723aa-d9eb-40f9-9e2d-de9e12cb405b)
 ![Home_After_login](https://github.com/user-attachments/assets/0488ca79-d36c-4861-9b09-03c73a217a79)
 ![admin_doc_view](https://github.com/user-attachments/assets/8799b1e0-a2e4-4b94-9435-d354c16c83b7)
-![admin_docAvail](https://github.com/user-attachments/assets/c04480a9-b29b-40e0-afeb-2e8ca27a1958)
+
