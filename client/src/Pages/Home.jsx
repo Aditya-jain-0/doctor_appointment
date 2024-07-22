@@ -93,6 +93,8 @@ const Home = () => {
         )}
         <br/>
         <a href="/register">Register</a>
+        <br/>
+        <a href="/admin">Admin Login</a>
       </div>
       
       <div className="main">

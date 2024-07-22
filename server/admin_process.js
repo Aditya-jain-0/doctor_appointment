@@ -45,14 +45,17 @@ router.post('/:docname/:docid',async(req,res)=>{
 })
 
 router.post('/:docname/:docid/changestatus',async(req,res)=>{
-    const {doctorid,doctorstatus} = req.body;
-    console.log(doctorid,doctorstatus);
-    
-    try {
-        const data = await Doctor.findOne({_id : doctorid});
-        console.log(data);
+    const {doctorid,available} = req.body;
+    try {  
+        if(available){
+            const opr = await Doctor.updateOne({_id : doctorid},{$set : {isavail : false}})
+        }else{
+            const opr = await Doctor.updateOne({_id : doctorid},{$set : {isavail : true}})
+        }
+        res.status(200).json({message : "Status Updated"})
     } catch (error) {
-        
+        console.log(error);
+        res.status(404).json({message : "Status Not Updated"})
     }
 })
 
