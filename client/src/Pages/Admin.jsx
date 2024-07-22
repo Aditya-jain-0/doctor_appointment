@@ -8,7 +8,7 @@ const API_BASE = `http://localhost:${PORT}/admin`;
 const Admin = () => {
   const usernameref = useRef(null);
   const passwordref = useRef(null);
-  const [login, setlogin] = useState(true);
+  const [login, setlogin] = useState(false);
   const [data, setdata] = useState({ doctors: [] });
   const nav = useNavigate();
 
