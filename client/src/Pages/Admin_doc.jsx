@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
+import Admin_Timing from '../Component/Admin_Timing';
 
 
 const PORT = process.env.REACT_APP_SERVER_PORT;
@@ -12,8 +13,8 @@ const Admin_doc = () => {
   const location = useLocation();
   const { doctorid, doctorname,doctorstatus } = location.state;
   const [docinfo, setDocinfo] = useState({})
+  const [slotData, setslotData] = useState([])
   const [change, setchange] = useState(false)
-  // console.log(doctorstatus);
 
 
   // Fetching Doctor Data
@@ -34,6 +35,7 @@ const Admin_doc = () => {
         if (resp.status === 200) {
           const serverdata = await resp.json();
           setDocinfo(serverdata.data);
+          setslotData(serverdata.data.slots)
         } else if (resp.status === 404) {
           alert("Doctor Not Found")
         } else {
@@ -83,10 +85,12 @@ const Admin_doc = () => {
     fetchdata()
     }
   }
+  
 
   return (
     <>
       <div className='main'>
+        <button className='defbtn' onClick={()=>nav('/admin')}>Back</ button>
         <h2> Doctor Name :-{docinfo.docname}<br /></h2>
         <h2>  Doctor Profession :-{docinfo.profession}<br /></h2>
         <h2>   Doctor Contact :-{docinfo.contact}<br /></h2>
@@ -111,8 +115,12 @@ const Admin_doc = () => {
             </>
           }
         </h2>
+        <div>
+          {slotData.map((slot,id)=>(
+            <Admin_Timing slot_id = {id} slot= {slot} doctorid = {docinfo._id}/>            
+          ))}
+        </div>
       </div>
-      <button className='defbtn' onClick={returnback}>Back</button>
     </>
   )
 }

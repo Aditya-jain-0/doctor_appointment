@@ -10,9 +10,13 @@ const currdate = ()=>{
   const mnths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; 
   return `${date.getDate()} ${mnths[date.getMonth()]} ${date.getFullYear()}`;
 }
-const Timing = ({element,timingId,islogin,email,username,docname}) => {
+const Timing = ({element,timingId,islogin,email,username,docname,isBooked}) => {
   const nav = useNavigate();
   const handleclick = async(timing)=>{
+    if(isBooked){
+      alert("Slot is Booked")
+      return
+    }
     if(islogin){
       if(window.confirm(`Confirm Appointment with ${docname} at ${element}`)){
         try { 
@@ -63,7 +67,9 @@ const Timing = ({element,timingId,islogin,email,username,docname}) => {
   }
   return (
     <>
-    <p onClick={()=>{handleclick(element)}}>{element}</p>
+    <p onClick={()=>{handleclick(element)}}>
+      {element}
+      </p>
     </>
   )
 }

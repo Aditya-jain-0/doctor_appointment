@@ -107,7 +107,7 @@ const Home = () => {
                 }
                 key={index} style={{fontWeight:'bold',fontSize:'21px',cursor:'pointer'}}
               >
-                {doctor.docname} - <u>{doctor.profession}</u>{doctor.isavail ? null : ' (Not Available)'}<br/><br/>
+                {doctor.docname} - <u>{doctor.profession}</u>{doctor.isavail ? null : <span style={{marginLeft : 20,color:'red' }}><i>Not Available</i></span>}<br/><br/>
               </li>
             ))}
           </ol>

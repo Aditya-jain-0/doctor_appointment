@@ -17,12 +17,16 @@ const Docpage = () => {
         <br />
         <div className="timing-container">
           {slots.map((slot, index) => (
-            !slot.isBooked && (
-              <div key={index} className="timing-item">
-                <Timing element={slot.timing} timingId={slot._id} islogin={isLogin} email = {email} username={name} docname={docname}/>
+            // !slot.isBooked && (
+              // <div key={index} className="timing-item">
+              <div 
+                key={index} 
+                className= {slot.isBooked ? "timing-item-booked" : "timing-item"}
+              >
+                <Timing element={slot.timing} timingId={slot._id} islogin={isLogin} email = {email} username={name} docname={docname} isBooked = {slot.isBooked}/>
                 {console.log(slot.timing," = ",slot._id)}                    
               </div>
-            )
+            
           ))}
         </div>
       </div>

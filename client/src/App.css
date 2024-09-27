@@ -5,24 +5,6 @@
   align-items: center;
 }
 
-.timing-item {
-   border: 1px solid black;
-  color: black;
-  padding: 5px;
-  text-align: center;
-  background-color: #f0f0f0;
-  width: 85px;
-  height: 40px; 
-  border-radius: 50px; 
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  margin: 10px;
-  cursor: pointer;
-  font-size: 17px;
-  font-weight: bold;
-}
-
 a{
   color : greenyellow;
   background: none;
@@ -68,4 +50,91 @@ form input{
   margin: 13px;
   padding: 6px; 
   border: 2px solid white;
+}
+
+
+.timing-item {
+  border: 1px solid black;
+ color: black;
+ padding: 5px;
+ text-align: center;
+ background-color: #f0f0f0;
+ width: 98px;
+ height: 40px; 
+ /* border-radius: 50px;  */
+ display: flex;
+ justify-content: center; 
+ align-items: center;
+ margin: 10px;
+ cursor: pointer;
+ font-size: 17px;
+ font-weight: bold;
+}
+
+.timing-item-booked {
+  border: 1px solid black;
+ color: black;
+ padding: 5px;
+ text-align: center;
+ background-color: grey;
+ width: 85px;
+ height: 40px; 
+ border-radius: 50px; 
+ display: flex;
+ justify-content: center; 
+ align-items: center;
+ margin: 10px;
+ cursor: pointer;
+ font-size: 17px;
+ font-weight: bold;
+}
+
+.admin-doc-timing {
+  display: flex;
+  height: 100px;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.admin-doc-timing > button {
+  border: 1px solid black;
+ color: black;
+ padding: 5px;
+ text-align: center;
+ background-color: #f0f0f0;
+ width: 98px;
+ height: 40px; 
+ border-radius: 50px; 
+ text-align: center;
+ line-height:30px;
+margin: 10px;
+ cursor: pointer;
+ font-size: 17px;
+ font-weight: bold;
+}
+
+.admin-doc-timing > input {
+  color: black;
+  padding: 5px;
+  text-align: center;
+  background-color: #f0f0f0;
+  width: 98px;
+  margin: 8px;
+  height: 30px;   
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.admin-doc-timing > p{
+  border: 1px solid black;
+ color: black;
+ background-color: #f0f0f0;
+ width: 98px;
+ height: 40px; 
+ text-align: center;
+ line-height:40px;
+margin: 10px;
+ cursor: pointer;
+ font-size: 17px;
+ font-weight: bold;
 }
