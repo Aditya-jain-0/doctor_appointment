@@ -8,4 +8,5 @@ Doctor Appoitment System , Allows Patients to view doctor profile , book appoint
 ![Prev_Visit](https://github.com/user-attachments/assets/6f65a6bb-96b5-4985-b23d-1e400eedbb21)
 ![Admin](https://github.com/user-attachments/assets/741856c9-9c73-485c-a207-ea320e924159)
 ![Admin_doclist](https://github.com/user-attachments/assets/a4041fa8-8313-4159-9d99-da53173d3559)
-![Admin_docPage](https://github.com/user-attachments/assets/baad90cb-0225-4d22-9b1c-d7b46d91cb90)
+![Admin_docPage](https://github.com/user-attachments/assets/22be933f-5e45-4c75-af1f-a5e01bd36c05)
+
